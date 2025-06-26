@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>📊 Health Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #e8f0fb;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            width: 60%;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #3399ff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007bff;
+        }
+
+        .top-right-selector {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+
+        .top-right-selector select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<body>
+    <h2>📊 Enter Patient Vitals for Health Analytics</h2>
+
+    <form action="/analytics" method="post">
+        <input type="number" name="hr" placeholder="Heart Rate (bpm)" required>
+        <input type="number" name="bp_sys" placeholder="BP Systolic (mmHg)" required>
+        <input type="number" name="bp_dia" placeholder="BP Diastolic (mmHg)" required>
+        <input type="number" name="glucose" placeholder="Glucose (mg/dL)" required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    
+</body>
+</html>
