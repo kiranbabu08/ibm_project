@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HealthAI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #97aac4;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        select, textarea, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 6px;
+            border: 1px solid #a4abe0;
+        }
+        textarea {
+            width: 60%;
+            height: 60px;
+        }
+        button {
+            background-color: #395e83;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #6083a7;
+        }
+        .chat-container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            height: 400px;
+            overflow-y: auto;
+        }
+        .user-msg, .ai-msg {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            max-width: 80%;
+            clear: both;
+        }
+        .user-msg {
+            background-color: #007bff;
+            color: white;
+            float: right;
+        }
+        .ai-msg {
+            background-color: #f0f0f0;
+            color: black;
+            float: left;
+        }
+        .top-right-selector {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+        .top-right-selector select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<body>
+    <h1>🩺 HealthAI: Intelligent Healthcare Assistant</h1>
+
+    <!-- Top-right functionality switch -->
+    <div class="top-right-selector">
+        <select id="option" onchange="redirectIfNeeded(this.value)">
+            <option value="index">💬 Patient Chat</option>
+            <option value="disease">🧬 Disease Prediction</option>
+            <option value="treatment">💊 Treatment Plan</option>
+            <option value="analytics">📊 Health Analytics</option>
+        </select>
+    </div>
+
+    <div class="chat-container" id="chatBox"></div>
+
+    <form id="healthForm" action="/ask" method="post">
+        <textarea name="query" placeholder="Ask your health question here..." required></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+    <form action="/upload" method="get">
+        <button type="submit">📤 Upload Report</button>
+    </form>
+
+    <script>
+        function redirectIfNeeded(value) {
+            if (value === 'disease') {
+                window.location.href = '/disease';
+            } else if (value === 'treatment') {
+                window.location.href = '/treatment';
+            } else if (value === 'analytics') {
+                window.location.href = '/analytics';
+            } else if (value === 'index') {
+                window.location.href = '/';
+            }
+        }
+
+        const chatBox = document.getElementById("chatBox");
+        const form = document.getElementById("healthForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const userMsg = formData.get("query");
+
+            chatBox.innerHTML += `<div class='user-msg'>${userMsg}</div><div style='clear: both;'></div>`;
+
+            fetch("/ask", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                chatBox.innerHTML += `<div class='ai-msg'>${data.result}</div><div style='clear: both;'></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                form.querySelector("textarea").value = "";  // ✅ Fixed the bug here
+            })
+            .catch(err => {
+                chatBox.innerHTML += `<div class='ai-msg'>Error: ${err}</div><div style='clear: both;'></div>`;
+            });
+        });
+    </script>
+</body>
+</html>
