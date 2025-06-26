@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>HealthAI</h2>
+    <div class="response">{{ response }}</div>
+    {% if chart_image %}
+    <h2>📊 Analytics Visualization</h2>
+    <img src="{{ url_for('static', filename='analytics_chart.png') }}" style="width: 60%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    {% endif %}
+</body>
+</html>
