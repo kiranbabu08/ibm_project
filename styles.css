@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f0fa;
+    padding: 20px;
+    text-align: center;
+}
+
+textarea, input {
+    width: 60%;
+    padding: 8px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4da6ff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3399ff;
+}
+
+.response {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 5px;
+}
+.functionality-selector {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
